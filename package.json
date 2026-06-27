@@ -1,0 +1,17 @@
+{
+  "name": "aakshaya",
+  "version": "1.0.0",
+  "description": "AAKASHAYA — Infrared Satellite Intelligence System. From Infrared Vision to Earth Intelligence.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 8765",
+    "dev": "python -m http.server 8765",
+    "serve": "python -m http.server 8765"
+  },
+  "keywords": ["satellite", "infrared", "earth-observation", "ai", "mission-control"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
+}

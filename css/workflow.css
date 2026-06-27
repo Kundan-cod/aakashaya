@@ -1,0 +1,456 @@
+/* ===== Workflow Pipeline — Cinematic Animations ===== */
+
+/* ─── Modal Overlay ────────────────────────────────────────── */
+.wf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out-expo);
+}
+.wf-modal--revealed {
+  opacity: 1;
+  pointer-events: all;
+}
+.wf-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 16, 0.7);
+  backdrop-filter: blur(8px);
+}
+.wf-modal--revealed .wf-panel {
+  transform: translateY(0) scale(1);
+}
+.wf-modal--hidden {
+  display: none;
+}
+
+/* Done state — subtle golden border */
+.wf-modal--done .wf-panel {
+  border-color: rgba(0, 255, 136, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.08), var(--shadow-panel);
+}
+
+
+/* ─── Panel ──────────────────────────────────────────────── */
+.wf-panel {
+  background: var(--c-bg-glass);
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(14px) saturate(130%);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+  position: relative;
+}
+.wf-panel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--grad-panel);
+  pointer-events: none;
+}
+.wf-panel::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--c-cyan-soft), transparent);
+  pointer-events: none;
+}
+
+/* Header */
+.wf-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-3) var(--s-5);
+  border-bottom: 1px solid var(--c-border-soft);
+  position: relative;
+  z-index: 2;
+}
+.wf-panel__header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.wf-panel__led {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c-cyan);
+  box-shadow: 0 0 8px var(--c-cyan);
+  animation: pulseCyan 2s ease-in-out infinite;
+}
+.wf-panel__title {
+  font-family: var(--ff-display);
+  font-size: var(--fs-12);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-text-primary);
+  margin: 0;
+}
+.wf-panel__subtitle {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-10);
+  color: var(--c-text-muted);
+  letter-spacing: 0.12em;
+}
+.wf-panel__header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.wf-panel__total-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--c-text-dim);
+  text-transform: uppercase;
+}
+.wf-panel__total-pct {
+  font-family: var(--ff-display);
+  font-size: var(--fs-15);
+  color: var(--c-cyan);
+  letter-spacing: 0.06em;
+  min-width: 48px;
+  text-align: right;
+}
+.wf-panel__total-bar {
+  width: 120px;
+  height: 4px;
+  background: rgba(0, 240, 255, 0.1);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.wf-panel__total-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--c-cyan), var(--c-magenta));
+  border-radius: var(--r-pill);
+  transition: width 0.4s var(--ease-out-expo);
+  box-shadow: 0 0 8px var(--c-cyan);
+}
+
+/* ─── Cards Grid ─────────────────────────────────────────── */
+.wf-cards {
+  display: flex;
+  align-items: stretch;
+  padding: var(--s-4) var(--s-3);
+  gap: 0;
+  overflow-x: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Connector between cards */
+.wf-connector {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 28px;
+}
+.wf-connector svg {
+  width: 100%;
+  height: 12px;
+}
+
+/* ─── Individual Card ────────────────────────────────────── */
+.wf-card {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--s-3) var(--s-2);
+  border-radius: var(--r-md);
+  position: relative;
+  gap: var(--s-1);
+  transition: all 0.4s var(--ease-out-expo);
+  border: 1px solid transparent;
+
+  /* Start invisible for staggered entrance */
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+}
+.wf-card--enter {
+  animation: wfCardEnter 0.6s var(--ease-spring) forwards;
+  animation-delay: var(--stage-delay, 0s);
+}
+@keyframes wfCardEnter {
+  0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Card Icon ──────────────────────────────────────────── */
+.wf-card__icon {
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--stage-color, var(--c-cyan));
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s var(--ease-out-expo);
+}
+.wf-card__icon svg {
+  width: 100%; height: 100%;
+}
+/* Checkmark overlay on complete */
+.wf-card__icon--complete {
+  color: var(--c-green);
+}
+
+/* Glow ring */
+.wf-card__glow {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--stage-color) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.wf-card__glow--active {
+  opacity: 0.2;
+  animation: wfGlowPulse 1.6s ease-in-out infinite;
+}
+@keyframes wfGlowPulse {
+  0%, 100% { opacity: 0.15; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.3; transform: translateX(-50%) scale(1.15); }
+}
+
+/* Step number */
+.wf-card__num {
+  font-family: var(--ff-display);
+  font-size: var(--fs-10);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--stage-color, var(--c-cyan));
+  opacity: 0.6;
+}
+
+/* Label */
+.wf-card__label {
+  font-family: var(--ff-display);
+  font-size: var(--fs-11);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-primary);
+  line-height: 1.3;
+}
+
+/* Model */
+.wf-card__model {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--c-text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Status message */
+.wf-card__msg {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--stage-color, var(--c-cyan));
+  letter-spacing: 0.04em;
+  min-height: 14px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Progress bar */
+.wf-card__bar {
+  width: 80%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  margin-top: var(--s-1);
+}
+.wf-card__bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--stage-color, var(--c-cyan)), rgba(255, 255, 255, 0.4));
+  border-radius: var(--r-pill);
+  transition: width 0.3s var(--ease-out-expo);
+  position: relative;
+}
+.wf-card__bar-fill::after {
+  content: '';
+  position: absolute; right: 0; top: -1px; bottom: -1px;
+  width: 6px;
+  background: var(--stage-color, var(--c-cyan));
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--stage-color, var(--c-cyan));
+}
+
+/* Badge */
+.wf-card__badge {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-border-soft);
+  color: var(--c-text-muted);
+  background: rgba(0, 0, 0, 0.3);
+  margin-top: var(--s-1);
+}
+.wf-card__badge--processing {
+  color: var(--c-gold);
+  border-color: rgba(255, 184, 0, 0.5);
+  background: rgba(255, 184, 0, 0.1);
+  animation: blink 0.8s steps(2, end) infinite;
+}
+.wf-card__badge--complete {
+  color: var(--c-green);
+  border-color: rgba(0, 255, 136, 0.5);
+  background: rgba(0, 255, 136, 0.1);
+}
+
+/* ─── Active Card ────────────────────────────────────────── */
+.wf-card--active {
+  background: rgba(0, 240, 255, 0.06);
+  border-color: var(--c-border-mid);
+  box-shadow: inset 0 0 16px rgba(0, 240, 255, 0.04), 0 0 20px rgba(0, 240, 255, 0.06);
+}
+.wf-card--active .wf-card__icon {
+  animation: wfIconSpin 3s linear infinite;
+  filter: drop-shadow(0 0 6px var(--stage-color));
+}
+@keyframes wfIconSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.wf-card--active .wf-card__num {
+  opacity: 1;
+  text-shadow: 0 0 8px var(--stage-color);
+}
+
+/* Scanning line on active card */
+.wf-card--active::before {
+  content: '';
+  position: absolute;
+  left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--stage-color), transparent);
+  animation: wfScanDown 2s linear infinite;
+  opacity: 0.6;
+}
+@keyframes wfScanDown {
+  0% { top: 0; opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ─── Complete Card ──────────────────────────────────────── */
+.wf-card--complete {
+  border-color: rgba(0, 255, 136, 0.2);
+}
+.wf-card--complete .wf-card__icon {
+  animation: wfCheckBurst 0.6s var(--ease-spring) forwards;
+  color: var(--c-green);
+  filter: drop-shadow(0 0 6px var(--c-green));
+}
+@keyframes wfCheckBurst {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.wf-card--complete .wf-card__num {
+  color: var(--c-green);
+  opacity: 1;
+}
+.wf-card--complete .wf-card__bar-fill {
+  background: linear-gradient(90deg, var(--c-green), rgba(0, 255, 136, 0.4));
+}
+.wf-card--complete .wf-card__bar-fill::after {
+  background: var(--c-green);
+  box-shadow: 0 0 8px var(--c-green);
+}
+.wf-card--complete .wf-card__msg {
+  color: var(--c-green);
+}
+
+/* ─── Pending Card ───────────────────────────────────────── */
+.wf-card--pending {
+  opacity: 0.45;
+}
+.wf-card--pending .wf-card__icon {
+  filter: grayscale(0.6);
+}
+
+/* ─── Checkmark animation ────────────────────────────────── */
+.wf-checkmark { width: 100%; height: 100%; }
+.wf-check-circle {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: wfDrawCircle 0.5s ease-out forwards;
+}
+.wf-check-tick {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: wfDrawTick 0.3s ease-out 0.4s forwards;
+}
+@keyframes wfDrawCircle {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes wfDrawTick {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ─── Icon sub-animations ────────────────────────────────── */
+.wf-icon-dot { animation: pulseCyan 1.2s ease-in-out infinite; }
+.wf-icon-wave { stroke-dasharray: 120; stroke-dashoffset: 120; }
+.wf-card--active .wf-icon-wave { animation: wfDrawWave 2s ease-out infinite; }
+@keyframes wfDrawWave {
+  0% { stroke-dashoffset: 120; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -120; }
+}
+
+.wf-icon-ray { animation: wfRayPulse 1.5s ease-in-out infinite; }
+@keyframes wfRayPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.wf-icon-bbox { animation: wfBboxPulse 1.2s ease-in-out infinite; }
+@keyframes wfBboxPulse {
+  0%, 100% { stroke-dasharray: none; opacity: 0.8; }
+  50% { opacity: 1; stroke-width: 2.2; }
+}
+
+.wf-icon-color-r { stroke: #ff3860; }
+.wf-icon-color-g { stroke: #00ff88; }
+.wf-icon-color-b { stroke: #3ad6ff; }
+.wf-card--active .wf-icon-color-r,
+.wf-card--active .wf-icon-color-g,
+.wf-card--active .wf-icon-color-b {
+  animation: wfColorRotate 3s linear infinite;
+}
+@keyframes wfColorRotate {
+  0% { transform: rotate(0deg); transform-origin: 20px 20px; }
+  100% { transform: rotate(360deg); transform-origin: 20px 20px; }
+}
+
+/* ─── Modal Footer ───────────────────────────────────────── */
+.wf-panel__footer {
+  padding: var(--s-3) var(--s-5);
+  border-top: 1px solid var(--c-border-soft);
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+.wf-panel__close {
+  animation: wfCardEnter 0.5s var(--ease-spring) forwards;
+}

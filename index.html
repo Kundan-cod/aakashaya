@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" data-state="booting">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#020617" />
+  <meta name="description" content="AAKASHAYA — Infrared Satellite Intelligence System. From Infrared Vision to Earth Intelligence." />
+  <title>AAKASHAYA — Infrared Satellite Intelligence System</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="preconnect" href="https://esm.sh" crossorigin />
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+
+  <!-- Critical inline CSS to prevent FOUC -->
+  <style>
+    html, body { margin: 0; padding: 0; background: #020617; color: #e5e7eb; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; opacity: 1; overflow-x: hidden; }
+    #app { width: 100%; min-height: 100vh; }
+    .splash { background: #020617; }
+    #dashboard[hidden] { display: none; }
+  </style>
+
+  <!-- Stylesheets (cascade order matters) -->
+  <link rel="stylesheet" href="./css/reset.css?v=3" />
+  <link rel="stylesheet" href="./css/variables.css?v=3" />
+  <link rel="stylesheet" href="./css/base.css?v=3" />
+  <link rel="stylesheet" href="./css/animations.css?v=3" />
+  <link rel="stylesheet" href="./css/components.css?v=3" />
+  <link rel="stylesheet" href="./css/three-canvas.css?v=3" />
+  <link rel="stylesheet" href="./css/splash.css?v=3" />
+  <link rel="stylesheet" href="./css/dashboard.css?v=3" />
+  <link rel="stylesheet" href="./css/layout.css?v=3" />
+  <link rel="stylesheet" href="./css/sidebar.css?v=3" />
+  <link rel="stylesheet" href="./css/workflow.css?v=3" />
+  <link rel="stylesheet" href="./css/responsive.css?v=3" />
+</head>
+<body data-state="booting">
+  <div id="app">
+    <!-- 3D background canvas (Three.js attaches here) -->
+    <canvas id="earth-canvas" aria-hidden="true"></canvas>
+    <div id="canvas-veil" aria-hidden="true"></div>
+
+    <!-- Splash screen overlay -->
+    <div id="splash-screen" class="splash" aria-live="polite" aria-busy="true">
+      <div class="splash__backdrop"></div>
+      <div class="splash__signal" aria-hidden="true">
+        <div class="splash__signal-ring r1"></div>
+        <div class="splash__signal-ring r2"></div>
+        <div class="splash__signal-ring r3"></div>
+        <div class="splash__signal-sweep"></div>
+        <div class="splash__signal-cross"></div>
+        <div class="splash__signal-cross v"></div>
+      </div>
+
+      <div class="splash__content" data-phase="0">
+        <div class="splash__brand">
+          <div class="splash__brand-mark" aria-hidden="true">
+            <span class="orbit o1"></span>
+            <span class="orbit o2"></span>
+            <span class="orbit o3"></span>
+            <span class="dot"></span>
+          </div>
+          <h1 class="splash__title" data-text="AAKASHAYA">AAKASHAYA</h1>
+          <p class="splash__tagline">From Infrared Vision to Earth Intelligence</p>
+        </div>
+
+        <div class="splash__status" aria-live="polite">
+          <div class="splash__status-text" id="splash-status-text">Acquiring satellite signal&hellip;</div>
+          <div class="splash__progress" aria-hidden="true">
+            <div class="splash__progress-bar" id="splash-progress-bar"></div>
+          </div>
+          <div class="splash__status-meta">
+            <span class="kbd">AAK-2026-06</span>
+            <span class="dot-sep"></span>
+            <span id="splash-percent">0%</span>
+            <span class="dot-sep"></span>
+            <span class="kbd">LEO-450</span>
+          </div>
+        </div>
+
+        <div class="splash__telemetry" aria-hidden="true">
+          <div class="splash__tel-line"><span>SAT</span><b id="splash-tel-sat">AAROHI-1</b></div>
+          <div class="splash__tel-line"><span>ALT</span><b>450.2 km</b></div>
+          <div class="splash__tel-line"><span>INC</span><b>97.6°</b></div>
+          <div class="splash__tel-line"><span>SIG</span><b class="signal-pulse">-67.4 dBm</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard (mounted after splash) -->
+    <div id="dashboard" class="dashboard is-entering" hidden></div>
+
+    <!-- Toast root -->
+    <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="false"></div>
+  </div>
+
+  <!-- Vendor libraries (UMD globals) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+
+  <!-- App entry -->
+  <script type="module" src="./js/main.js?v=3"></script>
+
+  <!-- Inline error reporter -->
+  <script>
+    window.__aakErrors = [];
+    window.addEventListener('error', (e) => {
+      window.__aakErrors.push(`[${e.filename || 'inline'}:${e.lineno || '?'}] ${e.message}`);
+      showErr();
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      window.__aakErrors.push(`[promise] ${(e.reason && (e.reason.message || e.reason)) || 'unknown'}`);
+      showErr();
+    });
+    function showErr() {
+      if (document.getElementById('__aak_err')) return;
+      const div = document.createElement('div');
+      div.id = '__aak_err';
+      div.style.cssText = 'position:fixed; top:8px; left:8px; right:8px; z-index:9999; padding:12px 16px; background:rgba(255,56,96,0.18); border:1px solid #ff3860; color:#ffb0c0; font-family:monospace; font-size:12px; border-radius:6px; backdrop-filter:blur(6px); max-height:50vh; overflow:auto; pointer-events:auto;';
+      div.innerHTML = '<b style="color:#ff3860;">AAKASHAYA — Runtime Error</b><br>' + (window.__aakErrors.map((e) => `<div>${e}</div>`).join(''));
+      document.body.appendChild(div);
+    }
+    setTimeout(() => {
+      if (!document.documentElement.dataset.state || document.documentElement.dataset.state === 'booting') {
+        const el = document.getElementById('__aak_err') || document.createElement('div');
+        if (!document.getElementById('__aak_err')) {
+          el.style.cssText = 'position:fixed; top:8px; left:8px; right:8px; z-index:9999; padding:12px 16px; background:rgba(255,184,0,0.18); border:1px solid #ffb800; color:#ffd58a; font-family:monospace; font-size:12px; border-radius:6px;';
+          el.innerHTML = '<b>AAKASHAYA — Boot still in progress</b><br>If this persists, check the browser console for errors.';
+          document.body.appendChild(el);
+        }
+      }
+    }, 20000);
+  </script>
+</body>
+</html>
