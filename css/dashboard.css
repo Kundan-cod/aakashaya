@@ -1,4 +1,4 @@
-/* Dashboard layout — CSS Grid + flex helpers */
+/* Dashboard layout — CSS Grid + flex helpers (full-width desktop) */
 
 .dashboard {
   position: relative;
@@ -13,16 +13,16 @@
 
 /* Full-width workflow section */
 .workflow-full {
-  padding: var(--s-3) var(--s-4);
+  padding: var(--s-3) var(--s-5);
 }
 
-/* Top bar (nav) */
+/* Top bar (nav) — sticky inside content area, full width */
 .nav {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--s-5);
-  padding: var(--s-3) var(--s-4);
+  padding: var(--s-3) var(--s-5);
   background: var(--c-bg-glass-strong);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -31,6 +31,7 @@
   position: sticky;
   top: 0;
   z-index: 30;
+  width: 100%;
 }
 .nav__brand {
   display: flex;
@@ -88,25 +89,29 @@
   text-transform: uppercase;
 }
 
-/* Main grid — 2 columns: system dashboard | workspace area */
+/* Main grid — 2 columns: system dashboard | workspace area (full desktop width) */
 .main {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 20px;
   align-items: start;
-  padding: 16px;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.col { display: flex; flex-direction: column; gap: 16px; min-width: 0; width: 100%; }
 
-/* Hero / overview section */
+/* Hero / overview section — balanced 1:1 split inside the workspace area */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  width: 100%;
 }
-.hero__left { display: flex; flex-direction: column; gap: 12px; }
-.hero__right { display: flex; flex-direction: column; gap: 12px; }
+.hero__left { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.hero__right { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 
 
 /* Telemetry */
@@ -156,8 +161,9 @@
   display: flex;
   align-items: stretch;
   position: relative;
-  padding: var(--s-4) 0;
+  padding: var(--s-5) var(--s-2);
   overflow-x: auto;
+  width: 100%;
 }
 .timeline__track {
   position: absolute;
@@ -186,7 +192,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--s-2);
-  min-width: 110px;
+  min-width: 130px;
   position: relative;
   z-index: 2;
   cursor: pointer;
@@ -253,12 +259,13 @@
 }
 .semantic__confidence {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: var(--s-5);
   align-items: center;
   margin-top: var(--s-5);
   padding-top: var(--s-4);
   border-top: 1px solid var(--c-border-soft);
+  width: 100%;
 }
 .semantic__confidence-ring {
   position: relative;
@@ -286,9 +293,10 @@
 /* Earth Intelligence Report */
 .report {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--s-4);
   margin-bottom: var(--s-5);
+  width: 100%;
 }
 .report__metric {
   padding: var(--s-3) var(--s-4);
@@ -338,8 +346,8 @@
 }
 .report__detections {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--s-2);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-3);
 }
 .report__detection {
   display: flex; align-items: center; gap: var(--s-2);
@@ -372,6 +380,7 @@
   position: relative;
   padding: var(--s-5) var(--s-3);
   overflow-x: auto;
+  width: 100%;
 }
 .architecture__svg { width: 100%; min-width: 720px; height: auto; display: block; }
 .architecture__node {
@@ -418,7 +427,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--s-3) var(--s-4);
+  padding: var(--s-4) var(--s-5);
   background: var(--c-bg-glass-strong);
   border-top: 1px solid var(--c-border-soft);
   font-family: var(--ff-mono);
@@ -426,8 +435,12 @@
   color: var(--c-text-muted);
   letter-spacing: 0.1em;
   backdrop-filter: blur(14px);
+  width: 100%;
+  margin-top: auto;
+  flex-wrap: wrap;
+  gap: var(--s-3);
 }
-.footer__left, .footer__right { display: flex; align-items: center; gap: var(--s-3); }
+.footer__left, .footer__right { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
 
 /* Utility classes */
 .stack { display: flex; flex-direction: column; gap: var(--s-3); }
@@ -474,6 +487,6 @@
 /* Sections inside panels */
 .subgrid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--s-4);
 }

@@ -128,4 +128,10 @@
   margin-top: var(--s-1);
 }
 
-.workflow-section { min-height: 0; }
+.workflow-section { min-height: 0; width: 100%; }
+
+/* Ensure all section wrappers inside .col are full-width */
+.col > * { width: 100%; min-width: 0; }
+
+/* Hero & subrow should span full width of their column */
+.hero, .subgrid { width: 100%; }

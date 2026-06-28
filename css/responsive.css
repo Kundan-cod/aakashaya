@@ -1,15 +1,30 @@
-/* Responsive breakpoints for AAKASHAYA */
+/* Responsive breakpoints for AAKASHAYA — desktop-first */
+
+@media (max-width: 1600px) {
+  :root { --sidebar-w: 220px; }
+  .main {
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+}
 
 @media (max-width: 1440px) {
   :root { --header-h: 68px; }
   .main {
     grid-template-columns: 280px minmax(0, 1fr);
-    gap: 12px;
+    gap: 14px;
+    padding: 14px;
   }
 }
 
+@media (max-width: 1280px) {
+  .nav { gap: var(--s-3); padding: var(--s-3) var(--s-4); }
+  .nav__engines { gap: 6px; }
+}
+
 @media (max-width: 1200px) {
-  /* Auto-collapse sidebar-wrapper and sidebar */
+  /* Auto-collapse sidebar-wrapper and sidebar — keeps full desktop layout */
   .sidebar-wrapper {
     width: var(--sidebar-w-collapsed);
     min-width: var(--sidebar-w-collapsed);
@@ -17,7 +32,7 @@
   .sidebar {
     width: var(--sidebar-w-collapsed);
   }
-  
+
   .sidebar .sidebar__brand-text,
   .sidebar .sidebar__group-label,
   .sidebar .sidebar__link-text,
@@ -27,25 +42,26 @@
     opacity: 0;
     pointer-events: none;
   }
-  
+
   .sidebar .sidebar__group-label {
     height: 0;
     padding: 0;
     margin: 0;
     overflow: hidden;
   }
-  
+
   .sidebar .sidebar__link {
     justify-content: center;
     padding: 10px 0;
   }
-  
-  /* Stack the system panel and main workspace vertically */
+
+  /* Workspace grid — give the right column more room since sidebar collapsed */
   .main {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
-  
+
+  /* Stack the system panel as horizontal cards under the workspace */
   .main > .col--left {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));

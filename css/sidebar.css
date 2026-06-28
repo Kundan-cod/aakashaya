@@ -1,12 +1,13 @@
 /* ===== Sidebar — Clean, Aligned, Collapsible ===== */
 
-/* App shell: sidebar + content area */
+/* App shell: sidebar + content area — full desktop width */
 .app-shell {
   display: flex;
   width: 100%;
   min-height: 100vh;
   position: relative;
   z-index: var(--z-content);
+  align-items: stretch;
 }
 
 /* ─── Sidebar Wrapper ────────────────────────────────── */
@@ -305,11 +306,15 @@
   flex-shrink: 0;
 }
 
-/* ─── Content Area ───────────────────────────────────── */
+/* ─── Content Area — fills remaining horizontal space ─── */
 .app-content {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
+  width: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 /* ─── Tooltip for collapsed state ────────────────────── */

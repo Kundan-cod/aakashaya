@@ -189,11 +189,13 @@
   position: relative;
   border: 2px dashed var(--c-border-mid);
   border-radius: var(--r-lg);
-  padding: var(--s-8) var(--s-5);
+  padding: var(--s-8) var(--s-6);
   text-align: center;
   background: rgba(0, 240, 255, 0.03);
   transition: border-color var(--dur-base) ease, background var(--dur-base) ease;
   cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 .upload-zone:hover, .upload-zone.is-hover {
   border-color: var(--c-cyan);
