@@ -91,22 +91,22 @@
 /* Main grid — 3 columns: telemetry | workflow+upload | console */
 .main {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr) 320px;
-  gap: var(--s-3);
-  align-items: stretch;
-  padding: var(--s-3) var(--s-4);
+  grid-template-columns: 260px minmax(0, 1fr) 300px;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 16px;
 }
 
-.col { display: flex; flex-direction: column; gap: var(--s-5); min-width: 0; }
+.col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 
 /* Hero / overview section */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: var(--s-5);
+  gap: 12px;
 }
-.hero__left { display: flex; flex-direction: column; gap: var(--s-5); }
-.hero__right { display: flex; flex-direction: column; gap: var(--s-5); }
+.hero__left { display: flex; flex-direction: column; gap: 12px; }
+.hero__right { display: flex; flex-direction: column; gap: 12px; }
 
 
 /* Telemetry */

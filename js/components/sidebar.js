@@ -1,4 +1,4 @@
-// Sidebar component — collapsible navigation panel
+// Sidebar component — collapsible navigation panel with theme toggle
 import { el } from '../utils/dom.js';
 import { bus } from '../eventBus.js';
 
@@ -7,7 +7,6 @@ const NAV_ITEMS = [
     group: 'Mission Control',
     items: [
       { id: 'nav-dashboard',   icon: 'grid',      label: 'Dashboard',          section: 'main-content' },
-      { id: 'nav-workflow',    icon: 'workflow',   label: 'Workflow Pipeline',  section: 'section-workflow' },
       { id: 'nav-upload',     icon: 'upload',     label: 'Upload IR Image',    section: 'section-upload' },
     ],
   },
@@ -38,7 +37,6 @@ const NAV_ITEMS = [
 
 const ICONS = {
   grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
-  workflow: '<polyline points="1 4 1 10 7 10"/><polyline points="1 20 1 14 7 14"/><rect x="7" y="7" width="6" height="6" rx="1"/><rect x="7" y="11" width="6" height="6" rx="1"/><polyline points="13 10 19 10 19 4"/><polyline points="13 14 19 14 19 20"/>',
   upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
   cpu: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',
   layers: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
@@ -49,10 +47,32 @@ const ICONS = {
   terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
   clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
   chevron: '<polyline points="15 18 9 12 15 6"/>',
+  sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
+  moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
 };
 
 function icon(name) {
   return `<svg class="sidebar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ''}</svg>`;
+}
+
+function themeIcon(name) {
+  return `<svg class="sidebar__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ''}</svg>`;
+}
+
+// ─── Theme management ─────────────────────────────────────
+function getTheme() {
+  return localStorage.getItem('aak-theme') || 'dark';
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('aak-theme', theme);
+  // Update the meta theme-color for mobile browsers
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) {
+    metaTheme.setAttribute('content', theme === 'dark' ? '#020617' : '#f0f4f8');
+  }
+  bus.emit('theme:changed', { theme });
 }
 
 export function mountSidebar(root) {
@@ -94,20 +114,13 @@ export function mountSidebar(root) {
         class: 'sidebar__link',
         'data-section': item.section,
         'data-tooltip': item.label,
-        html: `${icon(item.id.replace('nav-', ''))}
-               <span class="sidebar__link-text">${item.label}</span>`,
+        html: `${icon(item.icon)}<span class="sidebar__link-text">${item.label}</span>`,
       });
-
-      // Use the specific icon for each item
-      link.innerHTML = `${icon(item.icon)}
-        <span class="sidebar__link-text">${item.label}</span>`;
 
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        // Remove active from all
         linkEls.forEach((l) => l.classList.remove('is-active'));
         link.classList.add('is-active');
-        // Scroll to section
         const target = document.getElementById(item.section);
         if (target) {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -121,10 +134,40 @@ export function mountSidebar(root) {
     nav.appendChild(grp);
   });
 
-  // Set first link active by default
   if (linkEls.length > 0) linkEls[0].classList.add('is-active');
-
   sidebar.appendChild(nav);
+
+  // ─── Theme Toggle ───────────────────────────────────────
+  const currentTheme = getTheme();
+  setTheme(currentTheme); // Apply saved theme on mount
+
+  const themeRow = el('div', { class: 'sidebar__theme-toggle' });
+  const isDark = currentTheme === 'dark';
+  themeRow.innerHTML = `
+    ${isDark ? themeIcon('moon') : themeIcon('sun')}
+    <span class="sidebar__theme-label">${isDark ? 'DARK MODE' : 'LIGHT MODE'}</span>
+    <button class="sidebar__theme-switch" aria-label="Toggle dark/light mode" style="margin-left:auto;"></button>
+  `;
+  sidebar.appendChild(themeRow);
+
+  const themeSwitch = themeRow.querySelector('.sidebar__theme-switch');
+  const themeLabel = themeRow.querySelector('.sidebar__theme-label');
+
+  themeSwitch.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const next = getTheme() === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    themeLabel.textContent = next === 'dark' ? 'DARK MODE' : 'LIGHT MODE';
+    // Update the icon
+    const iconContainer = themeRow.querySelector('.sidebar__theme-icon');
+    if (iconContainer) {
+      iconContainer.outerHTML = next === 'dark' ? themeIcon('moon') : themeIcon('sun');
+    }
+  });
+
+  themeRow.addEventListener('click', () => {
+    themeSwitch.click();
+  });
 
   // Footer
   const footer = el('div', { class: 'sidebar__footer' });

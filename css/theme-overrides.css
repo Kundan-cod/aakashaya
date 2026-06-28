@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE OVERRIDES
+   All hardcoded rgba/hex values that don't use CSS 
+   variables need explicit light-mode overrides here.
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Body & Canvas ──────────────────────────────────── */
+[data-theme="light"] body {
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%);
+}
+
+/* ─── Splash screen ──────────────────────────────────── */
+[data-theme="light"] .splash {
+  background: radial-gradient(ellipse at center, #f8fafc 0%, #e2e8f0 70%);
+}
+[data-theme="light"] .splash__backdrop {
+  background:
+    radial-gradient(ellipse at center, transparent 0%, rgba(240, 244, 248, 0.4) 80%),
+    repeating-linear-gradient(0deg, rgba(8, 145, 178, 0.04) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(8, 145, 178, 0.04) 0 1px, transparent 1px 60px);
+}
+
+/* ─── Panels ─────────────────────────────────────────── */
+[data-theme="light"] .panel {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .panel::before {
+  background: linear-gradient(180deg, rgba(8, 145, 178, 0.03) 0%, transparent 60%);
+}
+[data-theme="light"] .panel::after {
+  background: linear-gradient(90deg, transparent, rgba(8, 145, 178, 0.2), transparent);
+}
+
+/* ─── Nav Bar ────────────────────────────────────────── */
+[data-theme="light"] .nav {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Buttons ────────────────────────────────────────── */
+[data-theme="light"] .btn {
+  background: linear-gradient(180deg, rgba(8, 145, 178, 0.06), rgba(8, 145, 178, 0.02));
+  border-color: var(--c-border-mid);
+}
+[data-theme="light"] .btn--primary {
+  background: linear-gradient(180deg, rgba(8, 145, 178, 0.2), rgba(8, 145, 178, 0.1));
+  color: var(--c-cyan);
+  border-color: var(--c-cyan);
+}
+[data-theme="light"] .btn--ghost {
+  background: transparent;
+  border-color: var(--c-border-soft);
+}
+
+/* ─── Badges ─────────────────────────────────────────── */
+[data-theme="light"] .badge {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--c-border-soft);
+}
+[data-theme="light"] .badge--online {
+  background: rgba(5, 150, 105, 0.08);
+  border-color: rgba(5, 150, 105, 0.3);
+}
+
+/* ─── Console ────────────────────────────────────────── */
+[data-theme="light"] .console {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: var(--c-border-soft);
+}
+[data-theme="light"] .console__head {
+  background: rgba(8, 145, 178, 0.04);
+}
+
+/* ─── Upload Zone ────────────────────────────────────── */
+[data-theme="light"] .upload-zone {
+  background: rgba(8, 145, 178, 0.02);
+  border-color: var(--c-border-mid);
+}
+[data-theme="light"] .upload-zone:hover,
+[data-theme="light"] .upload-zone.is-hover {
+  background: rgba(8, 145, 178, 0.06);
+  border-color: var(--c-cyan);
+}
+
+/* ─── Toast ──────────────────────────────────────────── */
+[data-theme="light"] .toast {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--c-border-mid);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── Processing Overlay ─────────────────────────────── */
+[data-theme="light"] .processing-overlay {
+  background: rgba(240, 244, 248, 0.88);
+}
+
+/* ─── Preview Thumb ──────────────────────────────────── */
+[data-theme="light"] .preview-thumb {
+  background: #e2e8f0;
+}
+
+/* ─── Footer ─────────────────────────────────────────── */
+[data-theme="light"] .footer {
+  background: rgba(255, 255, 255, 0.9);
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Metric Tiles ───────────────────────────────────── */
+[data-theme="light"] .metric-tile {
+  background: rgba(8, 145, 178, 0.03);
+}
+[data-theme="light"] .report__metric {
+  background: rgba(8, 145, 178, 0.03);
+}
+[data-theme="light"] .report__detection {
+  background: rgba(8, 145, 178, 0.03);
+}
+
+/* ─── Semantic Bars ──────────────────────────────────── */
+[data-theme="light"] .semantic__bar {
+  background: rgba(8, 145, 178, 0.06);
+}
+
+/* ─── Progress Bars ──────────────────────────────────── */
+[data-theme="light"] .progress {
+  background: rgba(8, 145, 178, 0.06);
+}
+
+/* ─── Telemetry ──────────────────────────────────────── */
+[data-theme="light"] .telemetry__bar {
+  background: rgba(8, 145, 178, 0.06);
+}
+
+/* ─── Scan Grid ──────────────────────────────────────── */
+[data-theme="light"] .scan-grid {
+  background:
+    repeating-linear-gradient(0deg, rgba(8, 145, 178, 0.04) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, rgba(8, 145, 178, 0.04) 0 1px, transparent 1px 24px);
+}
+
+/* ─── Help Overlay ───────────────────────────────────── */
+[data-theme="light"] .help-overlay {
+  background: rgba(240, 244, 248, 0.85);
+}
+[data-theme="light"] .help-overlay__panel {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--c-border-mid);
+}
+
+/* ─── Workflow Modal ─────────────────────────────────── */
+[data-theme="light"] .wf-modal__backdrop {
+  background: rgba(240, 244, 248, 0.75);
+}
+[data-theme="light"] .wf-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Scrollbar (light) ──────────────────────────────── */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(8, 145, 178, 0.3), rgba(8, 145, 178, 0.1));
+}
+
+/* ─── Architecture SVG ───────────────────────────────── */
+[data-theme="light"] .architecture__node {
+  fill: #ffffff;
+  stroke: var(--c-border-mid);
+}
+[data-theme="light"] .architecture__node-label {
+  fill: var(--c-text-primary);
+}
+
+/* ─── Smooth transition for all themed elements ──────── */
+.panel, .nav, .footer, .sidebar, .console, .btn, .badge,
+.upload-zone, .toast, .metric-tile, .report__metric,
+.report__detection, .help-overlay, .processing-overlay {
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, color 0.35s ease;
+}

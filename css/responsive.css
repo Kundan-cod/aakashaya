@@ -1,19 +1,20 @@
 /* Responsive breakpoints */
 @media (max-width: 1440px) {
   :root { --header-h: 68px; }
-  .main { grid-template-columns: 260px minmax(0, 1fr) 300px; gap: var(--s-3); }
+  .main { grid-template-columns: 240px minmax(0, 1fr) 280px; gap: 10px; }
 }
 @media (max-width: 1200px) {
-  .sidebar { width: 56px; min-width: 56px; }
+  .sidebar { width: var(--sidebar-w-collapsed); min-width: var(--sidebar-w-collapsed); }
   .sidebar .sidebar__brand-text,
   .sidebar .sidebar__group-label,
   .sidebar .sidebar__link-text,
   .sidebar .sidebar__link-status,
-  .sidebar .sidebar__footer span { opacity: 0; pointer-events: none; }
+  .sidebar .sidebar__footer span,
+  .sidebar .sidebar__theme-label { opacity: 0; pointer-events: none; }
   .sidebar .sidebar__group-label { height: 0; padding: 0; margin: 0; overflow: hidden; }
-  .sidebar .sidebar__link { justify-content: center; padding: var(--s-2) 0; }
+  .sidebar .sidebar__link { justify-content: center; padding: 10px 0; }
   .main {
-    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-columns: minmax(0, 1fr) 280px;
   }
   .main > .col--left { grid-column: 1 / -1; }
   .main > .col--left .panel { max-width: 100%; }

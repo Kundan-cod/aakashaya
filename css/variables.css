@@ -1,11 +1,17 @@
-/* Design tokens for AAKASHAYA */
-:root {
+/* Design tokens for AAKASHAYA — Dark / Light mode system */
+
+/* ═══════════════════════════════════════════════════════
+   DARK THEME (default)
+   ═══════════════════════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
   /* Core palette */
   --c-bg-deep: #020617;
   --c-bg-night: #050a1a;
   --c-bg-panel: #0a0e27;
   --c-bg-glass: rgba(10, 14, 39, 0.55);
   --c-bg-glass-strong: rgba(10, 14, 39, 0.78);
+  --c-bg-surface: rgba(15, 20, 45, 0.6);
   --c-border-soft: rgba(0, 240, 255, 0.12);
   --c-border-mid: rgba(0, 240, 255, 0.22);
   --c-border-strong: rgba(0, 240, 255, 0.42);
@@ -36,6 +42,84 @@
              radial-gradient(ellipse at 50% 50%, rgba(122, 92, 255, 0.04) 0%, transparent 60%),
              linear-gradient(180deg, #020617 0%, #050a1a 100%);
 
+  /* Shadows & glows */
+  --glow-cyan-sm: 0 0 12px rgba(0, 240, 255, 0.35);
+  --glow-cyan-md: 0 0 24px rgba(0, 240, 255, 0.5), 0 0 60px rgba(0, 240, 255, 0.18);
+  --glow-cyan-lg: 0 0 36px rgba(0, 240, 255, 0.6), 0 0 100px rgba(0, 240, 255, 0.25);
+  --glow-magenta-md: 0 0 24px rgba(255, 0, 234, 0.45);
+  --glow-green-md: 0 0 18px rgba(0, 255, 136, 0.45);
+  --glow-gold-md: 0 0 18px rgba(255, 184, 0, 0.45);
+  --shadow-panel: 0 8px 30px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(0, 240, 255, 0.08) inset;
+  --shadow-holo: 0 18px 60px rgba(0, 240, 255, 0.15), 0 6px 20px rgba(0, 0, 0, 0.4);
+  --shadow-elev: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 240, 255, 0.12);
+
+  /* Sidebar specific */
+  --sidebar-bg: rgba(6, 10, 30, 0.92);
+  --sidebar-hover: rgba(0, 240, 255, 0.06);
+  --sidebar-active-bg: rgba(0, 240, 255, 0.1);
+  --sidebar-border: rgba(0, 240, 255, 0.08);
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT THEME
+   ═══════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* Core palette */
+  --c-bg-deep: #f0f4f8;
+  --c-bg-night: #e8edf3;
+  --c-bg-panel: #ffffff;
+  --c-bg-glass: rgba(255, 255, 255, 0.72);
+  --c-bg-glass-strong: rgba(255, 255, 255, 0.88);
+  --c-bg-surface: rgba(240, 244, 250, 0.8);
+  --c-border-soft: rgba(0, 80, 120, 0.10);
+  --c-border-mid: rgba(0, 80, 120, 0.18);
+  --c-border-strong: rgba(0, 80, 120, 0.30);
+
+  /* Accents (slightly deeper for contrast on white) */
+  --c-cyan: #0891b2;
+  --c-cyan-soft: rgba(8, 145, 178, 0.35);
+  --c-magenta: #c026d3;
+  --c-magenta-soft: rgba(192, 38, 211, 0.35);
+  --c-gold: #d97706;
+  --c-green: #059669;
+  --c-warn: #d97706;
+  --c-error: #dc2626;
+  --c-violet: #7c3aed;
+
+  /* Text */
+  --c-text-primary: #0f172a;
+  --c-text-secondary: #475569;
+  --c-text-muted: #94a3b8;
+  --c-text-dim: #cbd5e1;
+
+  /* Gradients */
+  --grad-holo: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(192, 38, 211, 0.05) 50%, rgba(124, 58, 237, 0.08) 100%);
+  --grad-panel: linear-gradient(180deg, rgba(8, 145, 178, 0.04) 0%, rgba(8, 145, 178, 0) 60%);
+  --grad-radar: conic-gradient(from 0deg, transparent 0deg, rgba(8, 145, 178, 0.0) 280deg, rgba(8, 145, 178, 0.25) 350deg, rgba(8, 145, 178, 0.0) 360deg);
+  --grad-bg: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%);
+
+  /* Shadows & glows — softer for light */
+  --glow-cyan-sm: 0 0 8px rgba(8, 145, 178, 0.2);
+  --glow-cyan-md: 0 0 16px rgba(8, 145, 178, 0.25);
+  --glow-cyan-lg: 0 0 24px rgba(8, 145, 178, 0.3);
+  --glow-magenta-md: 0 0 16px rgba(192, 38, 211, 0.2);
+  --glow-green-md: 0 0 12px rgba(5, 150, 105, 0.2);
+  --glow-gold-md: 0 0 12px rgba(217, 119, 6, 0.2);
+  --shadow-panel: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(0, 0, 0, 0.04) inset;
+  --shadow-holo: 0 12px 40px rgba(0, 0, 0, 0.1);
+  --shadow-elev: 0 20px 60px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+
+  /* Sidebar specific */
+  --sidebar-bg: rgba(255, 255, 255, 0.95);
+  --sidebar-hover: rgba(8, 145, 178, 0.06);
+  --sidebar-active-bg: rgba(8, 145, 178, 0.1);
+  --sidebar-border: rgba(0, 0, 0, 0.06);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SHARED (theme-independent) TOKENS
+   ═══════════════════════════════════════════════════════ */
+:root {
   /* Typography */
   --ff-display: 'Orbitron', 'Inter', system-ui, sans-serif;
   --ff-body: 'Inter', system-ui, -apple-system, sans-serif;
@@ -86,17 +170,6 @@
   --z-modal: 100;
   --z-toast: 110;
 
-  /* Shadows & glows */
-  --glow-cyan-sm: 0 0 12px rgba(0, 240, 255, 0.35);
-  --glow-cyan-md: 0 0 24px rgba(0, 240, 255, 0.5), 0 0 60px rgba(0, 240, 255, 0.18);
-  --glow-cyan-lg: 0 0 36px rgba(0, 240, 255, 0.6), 0 0 100px rgba(0, 240, 255, 0.25);
-  --glow-magenta-md: 0 0 24px rgba(255, 0, 234, 0.45);
-  --glow-green-md: 0 0 18px rgba(0, 255, 136, 0.45);
-  --glow-gold-md: 0 0 18px rgba(255, 184, 0, 0.45);
-  --shadow-panel: 0 8px 30px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(0, 240, 255, 0.08) inset;
-  --shadow-holo: 0 18px 60px rgba(0, 240, 255, 0.15), 0 6px 20px rgba(0, 0, 0, 0.4);
-  --shadow-elev: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 240, 255, 0.12);
-
   /* Easings & durations */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
@@ -109,4 +182,6 @@
   --header-h: 72px;
   --console-w: 380px;
   --max-content-w: 100%;
+  --sidebar-w: 240px;
+  --sidebar-w-collapsed: 60px;
 }

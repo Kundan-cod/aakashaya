@@ -1,8 +1,8 @@
-html, body { background: var(--c-bg-deep); color: var(--c-text-primary); font-family: var(--ff-body); font-size: 16px; line-height: 1.5; }
+html, body { background: var(--c-bg-deep); color: var(--c-text-primary); font-family: var(--ff-body); font-size: 16px; line-height: 1.5; transition: background 0.4s ease, color 0.3s ease; }
 body { background: var(--grad-bg); min-height: 100vh; overflow-x: hidden; }
 ::selection { background: var(--c-cyan-soft); color: var(--c-bg-deep); }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); }
 ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--c-cyan-soft), transparent); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--c-cyan); }
 
@@ -17,3 +17,7 @@ code, kbd, pre, samp { font-family: var(--ff-mono); }
 .kbd { font-family: var(--ff-mono); font-size: var(--fs-11); padding: 2px 6px; background: rgba(0, 240, 255, 0.08); border: 1px solid var(--c-border-soft); border-radius: var(--r-sm); color: var(--c-cyan); letter-spacing: 0.04em; }
 a { color: var(--c-cyan); }
 hr { border: 0; border-top: 1px solid var(--c-border-soft); margin: var(--s-4) 0; }
+
+/* Light mode: hide/dim the 3D earth background since it's dark-themed */
+[data-theme="light"] #earth-canvas { opacity: 0.08; }
+[data-theme="light"] #canvas-veil { background: rgba(240, 244, 248, 0.85); }
