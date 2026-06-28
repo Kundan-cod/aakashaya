@@ -47,17 +47,13 @@ export async function mountDashboard({ root }) {
   const main = el('main', { class: 'main', id: 'main-content' });
   content.appendChild(main);
 
-  // Left column — telemetry
-  const colLeft = el('div', { class: 'col col--left', id: 'section-telemetry' });
+  // Left column — System panel (telemetry + command console)
+  const colLeft = el('div', { class: 'col col--left', id: 'section-system-telemetry' });
   main.appendChild(colLeft);
 
-  // Middle column — upload + processing + slider + semantic + report
+  // Right column — Workspace area (header, upload, timeline, reports)
   const colMid = el('div', { class: 'col col--mid' });
   main.appendChild(colMid);
-
-  // Right column — console + timeline
-  const colRight = el('div', { class: 'col col--right' });
-  main.appendChild(colRight);
 
   // Hero row (mission status + upload)
   const hero = el('div', { class: 'hero' });
@@ -79,6 +75,11 @@ export async function mountDashboard({ root }) {
   mountProcessingMonitor(subLeft);
   mountBeforeAfterSlider(subRight);
 
+  // Mission timeline (full-width in the workspace area)
+  const timelineWrap = el('div', { id: 'section-timeline' });
+  colMid.appendChild(timelineWrap);
+  mountMissionTimeline(timelineWrap);
+
   // Semantic Intelligence
   const semanticWrap = el('div', { id: 'section-semantic' });
   colMid.appendChild(semanticWrap);
@@ -94,16 +95,11 @@ export async function mountDashboard({ root }) {
   colMid.appendChild(archWrap);
   mountArchitectureViz(archWrap);
 
-  // Left column — telemetry
+  // Left column — system panels
   mountTelemetryPanel(colLeft);
 
-  // Right column — mission timeline + console
-  const timelineWrap = el('div', { id: 'section-timeline' });
-  colRight.appendChild(timelineWrap);
-  mountMissionTimeline(timelineWrap);
-
   const consoleWrap = el('div', { id: 'section-console' });
-  colRight.appendChild(consoleWrap);
+  colLeft.appendChild(consoleWrap);
   mountCommandConsole(consoleWrap);
 
   // Footer

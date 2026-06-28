@@ -76,6 +76,7 @@ function setTheme(theme) {
 }
 
 export function mountSidebar(root) {
+  const wrapper = el('div', { class: 'sidebar-wrapper' });
   const sidebar = el('aside', { class: 'sidebar', 'aria-label': 'Navigation sidebar' });
 
   // Toggle button
@@ -84,7 +85,8 @@ export function mountSidebar(root) {
     'aria-label': 'Toggle sidebar',
     html: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS.chevron}</svg>`,
   });
-  sidebar.appendChild(toggle);
+  wrapper.appendChild(sidebar);
+  wrapper.appendChild(toggle);
 
   // Header with logo
   const header = el('div', { class: 'sidebar__header' });
@@ -177,12 +179,13 @@ export function mountSidebar(root) {
   `;
   sidebar.appendChild(footer);
 
-  root.appendChild(sidebar);
+  root.appendChild(wrapper);
 
   // Toggle logic
   let collapsed = false;
   toggle.addEventListener('click', () => {
     collapsed = !collapsed;
+    wrapper.classList.toggle('is-collapsed', collapsed);
     sidebar.classList.toggle('is-collapsed', collapsed);
     bus.emit('sidebar:toggle', { collapsed });
   });
