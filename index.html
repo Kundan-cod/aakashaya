@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="./css/components.css?v=4" />
   <link rel="stylesheet" href="./css/three-canvas.css?v=4" />
   <link rel="stylesheet" href="./css/splash.css?v=4" />
+  <link rel="stylesheet" href="./css/landing.css?v=4" />
   <link rel="stylesheet" href="./css/dashboard.css?v=4" />
   <link rel="stylesheet" href="./css/layout.css?v=4" />
   <link rel="stylesheet" href="./css/sidebar.css?v=4" />
@@ -104,6 +105,83 @@
       </div>
     </div>
 
+    <!-- Landing Screen / Introduction (shown after splash, before dashboard) -->
+    <div id="landing-screen" class="landing" hidden>
+      <div class="landing__backdrop"></div>
+      <div class="landing__container">
+        <div class="landing__hero">
+          <div class="landing__brand">
+            <span class="landing__badge kbd">SYSTEM ONLINE</span>
+            <h1 class="landing__title">AAKASHAYA</h1>
+            <p class="landing__subtitle">Infrared Satellite Intelligence System</p>
+          </div>
+          <p class="landing__tagline">"From Infrared Vision to Earth Intelligence."</p>
+          <p class="landing__description">
+            AAKASHAYA is an advanced Earth Observation Intelligence Platform that transforms low-visibility infrared satellite imagery into enhanced, high-resolution, colorized, and semantically interpretable Earth intelligence.
+          </p>
+          <button id="enter-dashboard-btn" class="btn btn--primary btn--large float" aria-label="Enter Mission Control">
+            <span>INITIATE MISSION CONTROL</span>
+            <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="landing__features">
+          <h2 class="landing__features-title section-title">SYSTEM CAPABILITIES</h2>
+          <div class="landing__grid">
+            <div class="landing__card">
+              <div class="landing__card-icon text-cyan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="landing__card-title">Image Enhancement</h3>
+                <p class="landing__card-desc">Advanced SwinIR super-resolution upscaling and noise reduction algorithms for low-visibility frames.</p>
+              </div>
+            </div>
+            
+            <div class="landing__card">
+              <div class="landing__card-icon text-magenta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="landing__card-title">Thermal Colorization</h3>
+                <p class="landing__card-desc">Translating raw thermal signals into high-fidelity color spectrum mappings for quick visual interpretation.</p>
+              </div>
+            </div>
+            
+            <div class="landing__card">
+              <div class="landing__card-icon text-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2a4 4 0 0 1 4 4c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2a4 4 0 0 1 4-4z"/><path d="M8 8v2a4 4 0 0 0 8 0V8"/><line x1="12" y1="14" x2="12" y2="22"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="landing__card-title">Semantic Segmentation</h3>
+                <p class="landing__card-desc">AI-powered land classification models mapping water bodies, forest regions, agricultural sectors, and urban zones.</p>
+              </div>
+            </div>
+            
+            <div class="landing__card">
+              <div class="landing__card-icon text-gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6m11-11h-6M7 12H1"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="landing__card-title">Object Detection</h3>
+                <p class="landing__card-desc">Real-time target tracking and identification for ships, vehicle clusters, structures, solar farms, and airstrips.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Dashboard (mounted after splash) -->
     <div id="dashboard" class="dashboard is-entering" hidden></div>
 
@@ -116,7 +194,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 
   <!-- App entry -->
-  <script type="module" src="./js/main.js?v=3"></script>
+  <script type="module" src="./js/main.js?v=4"></script>
 
   <!-- Inline error reporter -->
   <script>

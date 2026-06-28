@@ -41,6 +41,28 @@ async function boot() {
     splash.classList.add('is-exiting', 'is-done');
   }
 
+  // Show landing/intro page
+  const landing = dom.get('landing-screen');
+  if (landing) {
+    landing.hidden = false;
+  }
+
+  // Wait for user to click "INITIATE MISSION CONTROL"
+  const enterBtn = dom.get('enter-dashboard-btn');
+  if (enterBtn && landing) {
+    await new Promise((resolve) => {
+      enterBtn.addEventListener('click', () => {
+        landing.classList.add('is-exiting');
+        const onEnd = () => {
+          landing.classList.add('is-done');
+          resolve();
+        };
+        landing.addEventListener('transitionend', onEnd, { once: true });
+        setTimeout(onEnd, 800); // safety fallback
+      });
+    });
+  }
+
   // Unhide dashboard before mounting so CSS transitions can animate in
   const dashboard = dom.get('dashboard');
   if (dashboard) dashboard.hidden = false;

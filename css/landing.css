@@ -1,0 +1,224 @@
+/* ===== Landing Page / Product Intro Screen ===== */
+
+.landing {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash); /* Show on top, same as splash */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: var(--s-8) var(--s-4);
+  transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+  background: radial-gradient(circle at center, rgba(10, 14, 39, 0.45) 0%, rgba(2, 6, 23, 0.95) 100%);
+}
+
+.landing.is-exiting {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+.landing.is-done {
+  display: none;
+}
+
+/* ─── Layout Container ────────────────────────────────── */
+.landing__container {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--s-16);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin: auto;
+}
+
+@media (max-width: 980px) {
+  .landing__container {
+    grid-template-columns: 1fr;
+    gap: var(--s-10);
+    text-align: center;
+  }
+}
+
+/* ─── Left Hero Side ──────────────────────────────────── */
+.landing__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+
+@media (max-width: 980px) {
+  .landing__hero {
+    align-items: center;
+  }
+}
+
+.landing__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.landing__badge {
+  align-self: flex-start;
+}
+@media (max-width: 980px) {
+  .landing__badge {
+    align-self: center;
+  }
+}
+
+.landing__title {
+  font-family: var(--ff-display);
+  font-size: clamp(var(--fs-32), 6vw, var(--fs-64));
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: var(--c-text-primary);
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.25);
+  background: linear-gradient(135deg, var(--c-text-primary) 30%, var(--c-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.landing__subtitle {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-13);
+  letter-spacing: 0.16em;
+  color: var(--c-text-secondary);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.landing__tagline {
+  font-family: var(--ff-display);
+  font-size: var(--fs-18);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--c-cyan);
+  margin: var(--s-2) 0 0;
+  text-shadow: 0 0 10px var(--c-cyan-soft);
+}
+
+.landing__description {
+  font-size: var(--fs-15);
+  color: var(--c-text-secondary);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 0 var(--s-3);
+}
+
+/* ─── Entrance button ────────────────────────────────── */
+#enter-dashboard-btn {
+  padding: 1.1em 2.2em;
+  font-size: var(--fs-14);
+}
+
+/* ─── Right Capabilities Side ─────────────────────────── */
+.landing__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+  width: 100%;
+}
+
+.landing__features-title {
+  margin-bottom: var(--s-2);
+}
+
+.landing__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+}
+
+@media (max-width: 640px) {
+  .landing__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Feature Cards */
+.landing__card {
+  background: var(--c-bg-glass);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--r-lg);
+  padding: var(--s-4) var(--s-5);
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: var(--s-4);
+  align-items: start;
+  transition: transform 0.3s var(--ease-out-expo), border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-panel);
+}
+
+.landing__card:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-border-mid);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.landing__card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: rgba(0, 240, 255, 0.05);
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  border: 1px solid var(--c-border-soft);
+}
+
+.landing__card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.landing__card-title {
+  font-family: var(--ff-display);
+  font-size: var(--fs-13);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-primary);
+  margin: 0 0 6px 0;
+}
+
+.landing__card-desc {
+  font-size: var(--fs-12);
+  color: var(--c-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ─── Light Mode Overrides ────────────────────────────── */
+[data-theme="light"] .landing {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5) 0%, rgba(240, 244, 248, 0.96) 100%);
+}
+
+[data-theme="light"] .landing__title {
+  text-shadow: 0 0 20px rgba(8, 145, 178, 0.15);
+  background: linear-gradient(135deg, var(--c-text-primary) 30%, var(--c-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .landing__card {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .landing__card-icon {
+  background: rgba(8, 145, 178, 0.05);
+  border-color: rgba(8, 145, 178, 0.1);
+}
